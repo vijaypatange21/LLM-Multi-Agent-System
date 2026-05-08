@@ -40,6 +40,13 @@ Orchestration Patterns (different strategies):
    - Good for reactive systems
    - Decoupled architecture
 
+6. DynamicOrchestrator (✅ Implemented)
+   - Runtime agent selection based on query analysis
+   - No hardcoded chains
+   - Budget-aware execution
+   - Comprehensive error handling and retries
+   - Structured event logging
+
 Key responsibilities:
 1. Message Routing
    - Map messages to agents
@@ -84,6 +91,31 @@ Database-backed state:
 - ExecutionTrace stored in PostgreSQL
 - Context managed by ContextManager
 - Messages queued in Redis for reliability
-
-No implementations yet - focus on architecture and design patterns.
 """
+
+from .dynamic_orchestrator import DynamicOrchestrator
+from .routing import RuleBasedRoutingPolicy, RoutingPolicy
+from .schemas import (
+    ExecutionPlan,
+    ExecutionStep,
+    OrchestrationEvent,
+    OrchestrationEventType,
+    OrchestrationTrace,
+    RoutingDecision,
+    RoutingDecisionReason,
+)
+from .state_machine import StructuredOrchestrationLogger
+
+__all__ = [
+    "DynamicOrchestrator",
+    "RoutingPolicy",
+    "RuleBasedRoutingPolicy",
+    "StructuredOrchestrationLogger",
+    "OrchestrationTrace",
+    "OrchestrationEvent",
+    "OrchestrationEventType",
+    "ExecutionPlan",
+    "ExecutionStep",
+    "RoutingDecision",
+    "RoutingDecisionReason",
+]
