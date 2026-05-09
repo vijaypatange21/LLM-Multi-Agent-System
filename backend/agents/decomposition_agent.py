@@ -137,6 +137,8 @@ class DecompositionAgent(BaseAgent):
                 original_query=query,
                 tasks=tasks,
                 dependencies=dependencies,
+                total_tasks=0,
+                total_dependencies=0,
             )
             
             # Step 5: Validate graph

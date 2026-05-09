@@ -9,6 +9,7 @@ WHY: Provides reusable functions for:
 - Topological sorting
 """
 
+import re
 from typing import Dict, List, Optional, Set, Tuple
 from uuid import UUID
 
@@ -376,47 +377,46 @@ class QueryParser:
         - "Search for A and search for B and search for C" → [Task(SEARCH), Task(SEARCH), Task(SEARCH)]
         """
         tasks: List[Task] = []
-        
-        # Split by "and" to handle multiple independent actions
-        parts = [p.strip() for p in query.split(" and ")]
-        
-        for part in parts:
-            part_lower = part.lower()
-            part_has_task = False
-            
-            # Find task keywords in this part
-            for action_keyword, task_type in QueryParser.ACTION_TO_TASK_TYPE.items():
-                if action_keyword in part_lower:
-                    # Extract what comes after the action in this part
-                    idx = part_lower.find(action_keyword)
-                    after_action = part[idx + len(action_keyword):].strip()
-                    
-                    # Remove common particles
-                    after_action = after_action.lstrip("for ").lstrip("to ").strip()
-                    
-                    if after_action and len(after_action) > 3:
-                        task = Task(
-                            type=task_type,
-                            description=f"{action_keyword.title()} {after_action}",
-                            input_description="Query results from previous task",
-                            expected_output=f"Results of {action_keyword}ing",
-                            reasoning=f"Query contains '{action_keyword}' action",
-                        )
-                    else:
-                        # Action found but no specific object - use part as description
-                        task = Task(
-                            type=task_type,
-                            description=part,
-                            input_description="Query results from previous task",
-                            expected_output=f"Results of {action_keyword}ing",
-                            reasoning=f"Query contains '{action_keyword}' action",
-                        )
-                    
-                    # Avoid exact duplicate descriptions
-                    if not any(t.description == task.description for t in tasks):
-                        tasks.append(task)
-                        part_has_task = True
-                        break  # Only one task type per part
+        normalized_query = re.sub(r"\s+", " ", query.strip())
+
+        # Find all action occurrences and preserve order by position.
+        candidates: List[Tuple[int, int, str, TaskType]] = []
+        for action_keyword, task_type in QueryParser.ACTION_TO_TASK_TYPE.items():
+            pattern = re.compile(r"\b" + re.escape(action_keyword) + r"\b", re.IGNORECASE)
+            for match in pattern.finditer(normalized_query):
+                candidates.append((match.start(), match.end(), action_keyword, task_type))
+
+        # Sort by position, and prefer longer keyword on exact start collision.
+        candidates.sort(key=lambda x: (x[0], -(x[1] - x[0])))
+
+        filtered: List[Tuple[int, int, str, TaskType]] = []
+        last_end = -1
+        for candidate in candidates:
+            start, end, action_keyword, task_type = candidate
+            if start < last_end:
+                continue
+            filtered.append((start, end, action_keyword, task_type))
+            last_end = end
+
+        for index, (start, end, action_keyword, task_type) in enumerate(filtered):
+            next_start = filtered[index + 1][0] if index + 1 < len(filtered) else len(normalized_query)
+            after_action = normalized_query[end:next_start].strip(" ,.;:-")
+            after_action = re.sub(r"^(and|to|for)\s+", "", after_action, flags=re.IGNORECASE).strip()
+
+            description = f"{action_keyword.title()} {after_action}".strip()
+            if not after_action:
+                description = action_keyword.title()
+
+            task = Task(
+                type=task_type,
+                description=description,
+                input_description="Query results from previous task",
+                expected_output=f"Results of {action_keyword}ing",
+                reasoning=f"Query contains '{action_keyword}' action",
+            )
+
+            if not any(t.description == task.description and t.type == task.type for t in tasks):
+                tasks.append(task)
         
         # If no tasks found, create generic one
         if not tasks:

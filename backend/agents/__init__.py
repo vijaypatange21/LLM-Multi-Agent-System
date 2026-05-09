@@ -49,6 +49,7 @@ Extension points:
 """
 
 from .decomposition_agent import DecompositionAgent
+from .retrieval_reasoning_agent import RetrievalReasoningAgent
 from .schemas import (
     AmbiguityIndicator,
     AmbiguityType,
@@ -63,6 +64,7 @@ from .schemas import (
 __all__ = [
     # Agents
     "DecompositionAgent",
+   "RetrievalReasoningAgent",
     # Schemas - Task types and status
     "Task",
     "TaskType",
