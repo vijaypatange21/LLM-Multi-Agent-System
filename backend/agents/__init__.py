@@ -49,10 +49,17 @@ Extension points:
 """
 
 from .decomposition_agent import DecompositionAgent
+from .critique_agent import CritiqueAgent
 from .retrieval_reasoning_agent import RetrievalReasoningAgent
 from .schemas import (
     AmbiguityIndicator,
     AmbiguityType,
+   ClaimConfidenceAssessment,
+   CritiqueFinding,
+   CritiqueIssueType,
+   CritiqueResult,
+   CritiqueSpan,
+   CritiqueTargetType,
     DecompositionResult,
     Task,
     TaskDependency,
@@ -64,6 +71,7 @@ from .schemas import (
 __all__ = [
     # Agents
     "DecompositionAgent",
+   "CritiqueAgent",
    "RetrievalReasoningAgent",
     # Schemas - Task types and status
     "Task",
@@ -76,4 +84,10 @@ __all__ = [
     "AmbiguityType",
     "AmbiguityIndicator",
     "DecompositionResult",
+   "CritiqueTargetType",
+   "CritiqueIssueType",
+   "CritiqueSpan",
+   "ClaimConfidenceAssessment",
+   "CritiqueFinding",
+   "CritiqueResult",
 ]

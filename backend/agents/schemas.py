@@ -13,7 +13,7 @@ Architecture:
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
@@ -294,3 +294,91 @@ class DecompositionResult(BaseModel):
     
     class Config:
         use_enum_values = False
+
+
+class CritiqueTargetType(str, Enum):
+    """Types of targets the critique agent can inspect."""
+    SENTENCE = "sentence"
+    CLAIM = "claim"
+    CITATION = "citation"
+    REASONING_STEP = "reasoning_step"
+    SPAN = "span"
+
+
+class CritiqueIssueType(str, Enum):
+    """Structured issue types for critique findings."""
+    CONTRADICTION = "contradiction"
+    HALLUCINATION = "hallucination"
+    FABRICATED_CITATION = "fabricated_citation"
+    PROMPT_INJECTION = "prompt_injection"
+    UNSUPPORTED_CLAIM = "unsupported_claim"
+    LOW_CONFIDENCE = "low_confidence"
+    DISAGREEMENT = "disagreement"
+
+
+class CritiqueSpan(BaseModel):
+    """Specific span extracted for critique."""
+
+    text: str = Field(description="Exact text span under review")
+    start_index: int = Field(ge=0, description="Start offset in the parent text")
+    end_index: int = Field(ge=0, description="Exclusive end offset in the parent text")
+    sentence_index: Optional[int] = Field(default=None, description="Sentence index when applicable")
+    source_text: Optional[str] = Field(default=None, description="Parent text from which the span was extracted")
+
+
+class ClaimConfidenceAssessment(BaseModel):
+    """Confidence estimate for an individual claim."""
+
+    claim_id: str = Field(description="Stable identifier for the claim")
+    claim_text: str = Field(description="Claim text that was assessed")
+    confidence_score: float = Field(ge=0, le=1, description="Confidence that the claim is supported")
+    reasoning: str = Field(description="Why this confidence score was assigned")
+    citations: List[str] = Field(default_factory=list, description="Source IDs or citation handles used")
+    span: Optional[CritiqueSpan] = Field(default=None, description="Primary span of the claim")
+
+
+class CritiqueFinding(BaseModel):
+    """A structured critique finding tied to a span, claim, citation, or reasoning step."""
+
+    finding_id: UUID = Field(default_factory=uuid4)
+    target_type: CritiqueTargetType
+    target_id: str = Field(description="Identifier of the critique target")
+    issue_type: CritiqueIssueType
+    severity: float = Field(ge=0, le=1, description="Issue severity from 0 to 1")
+    confidence: float = Field(ge=0, le=1, description="Confidence that the issue is real")
+    span: CritiqueSpan = Field(description="Text span supporting the finding")
+    explanation: str = Field(description="Why this finding was produced")
+    disagreement_explanation: Optional[str] = Field(
+        default=None,
+        description="How or why multiple sources disagree"
+    )
+    evidence: List[str] = Field(default_factory=list, description="Supporting source IDs or excerpt handles")
+
+
+class ReviewedOutputSummary(BaseModel):
+    """Summary of one reviewed agent output."""
+
+    output_id: str = Field(description="Stable identifier for the reviewed output")
+    agent_id: str = Field(description="Agent that produced the reviewed output")
+    output_kind: str = Field(description="High-level output type (e.g., retrieval_answer, task_graph)")
+    has_claims: bool = Field(default=False)
+    has_citations: bool = Field(default=False)
+    has_reasoning_steps: bool = Field(default=False)
+
+
+class CritiqueResult(BaseModel):
+    """Structured critique across one or more agent outputs."""
+
+    id: UUID = Field(default_factory=uuid4)
+    reviewed_outputs: List[ReviewedOutputSummary] = Field(default_factory=list)
+    claim_assessments: List[ClaimConfidenceAssessment] = Field(default_factory=list)
+    findings: List[CritiqueFinding] = Field(default_factory=list)
+    contradictions: List[CritiqueFinding] = Field(default_factory=list)
+    hallucinations: List[CritiqueFinding] = Field(default_factory=list)
+    citation_issues: List[CritiqueFinding] = Field(default_factory=list)
+    reasoning_step_issues: List[CritiqueFinding] = Field(default_factory=list)
+    total_issues: int = Field(default=0)
+    overall_confidence: float = Field(default=1.0, ge=0, le=1)
+    rationale: str = Field(default="", description="Short structured rationale for the critique")
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+
