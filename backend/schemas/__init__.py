@@ -7,7 +7,19 @@ type safety and validation across the distributed architecture.
 
 from .messages import AgentMessage, MessageRole
 from .context import SharedContext, ContextMetadata
-from .tools import ToolCall, ToolResult, ToolDefinition
+from .tools import (
+    ToolCall,
+    ToolCallDecision,
+    ToolExecutionAttempt,
+    ToolExecutionTrace,
+    ToolResult,
+    ToolResultStatus,
+    ToolDefinition,
+    ToolRetryOutcome,
+    ToolValidationIssue,
+    ToolValidationResult,
+    ToolType,
+)
 from .execution import ExecutionTrace, ExecutionStep
 from .evaluation import EvalResult, EvalMetric
 from .prompts import PromptVersion, PromptConfig
@@ -18,8 +30,16 @@ __all__ = [
     "SharedContext",
     "ContextMetadata",
     "ToolCall",
+    "ToolCallDecision",
+    "ToolExecutionAttempt",
+    "ToolExecutionTrace",
     "ToolResult",
+    "ToolResultStatus",
     "ToolDefinition",
+    "ToolRetryOutcome",
+    "ToolValidationIssue",
+    "ToolValidationResult",
+    "ToolType",
     "ExecutionTrace",
     "ExecutionStep",
     "EvalResult",

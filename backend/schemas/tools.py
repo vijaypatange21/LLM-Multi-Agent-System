@@ -12,7 +12,7 @@ Strong typing ensures proper invocation, reduces errors, and enables:
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
 
@@ -66,6 +66,10 @@ class ToolDefinition(BaseModel):
     
     # Operational constraints
     timeout_seconds: int = Field(default=30, description="Max execution time")
+    fallback_tool_ids: List[str] = Field(
+        default_factory=list,
+        description="Ordered fallback tools to try if the primary tool fails",
+    )
     required_permissions: List[str] = Field(
         default_factory=list,
         description="Permissions needed to invoke (e.g., ['write_database', 'external_api'])"
@@ -112,7 +116,7 @@ class ToolCall(BaseModel):
       for debugging/observability.
     """
     
-    id: UUID = Field(default_factory=lambda: UUID(int=0), description="Unique call ID")
+    id: UUID = Field(default_factory=uuid4, description="Unique call ID")
     tool_id: str = Field(description="Identifier of the tool being invoked")
     tool_version: str = Field(
         default="1.0.0",
@@ -148,6 +152,55 @@ class ToolResultStatus(str, Enum):
     RATE_LIMITED = "rate_limited"
 
 
+class ToolCallDecision(str, Enum):
+    """Acceptance state for a tool call before execution."""
+    ACCEPTED = "accepted"
+    REJECTED = "rejected"
+
+
+class ToolRetryOutcome(str, Enum):
+    """Outcome of a single retry attempt."""
+    RETRIED = "retried"
+    SUCCEEDED = "succeeded"
+    FAILED = "failed"
+    TIMED_OUT = "timed_out"
+
+
+class ToolExecutionAttempt(BaseModel):
+    """One independently logged attempt to execute a tool call."""
+
+    id: UUID = Field(default_factory=uuid4, description="Unique attempt ID")
+    tool_call_id: UUID = Field(description="Parent tool call")
+    attempt_number: int = Field(ge=1, description="1-indexed attempt number")
+    decision: ToolCallDecision = Field(description="Whether the attempt was accepted for execution")
+    outcome: ToolRetryOutcome = Field(description="Outcome of the attempt")
+    status: ToolResultStatus = Field(description="Tool result status for this attempt")
+    started_at: datetime = Field(default_factory=datetime.utcnow)
+    completed_at: datetime = Field(default_factory=datetime.utcnow)
+    latency_ms: float = Field(default=0.0, description="Observed latency for the attempt")
+    error_message: Optional[str] = Field(default=None, description="Why the attempt failed, if applicable")
+    structured_log: Dict[str, Any] = Field(default_factory=dict, description="Structured log payload for the attempt")
+    input_snapshot: Dict[str, Any] = Field(default_factory=dict, description="Validated input arguments for the attempt")
+    output_snapshot: Optional[Dict[str, Any]] = Field(default=None, description="Output captured for the attempt")
+
+
+class ToolExecutionTrace(BaseModel):
+    """Full execution record for a tool call, including all retry attempts."""
+
+    id: UUID = Field(default_factory=uuid4, description="Unique trace ID")
+    tool_call_id: UUID = Field(description="Tool call being executed")
+    tool_id: str = Field(description="Tool identifier")
+    agent_id: str = Field(description="Agent requesting the tool")
+    accepted: bool = Field(default=True, description="Whether the tool call was accepted")
+    rejected_reason: Optional[str] = Field(default=None, description="Reason for rejection if not accepted")
+    attempts: List[ToolExecutionAttempt] = Field(default_factory=list, description="All logged attempts")
+    final_result_status: ToolResultStatus = Field(description="Final execution status")
+    total_latency_ms: float = Field(default=0.0, description="Total latency across attempts")
+    total_attempts: int = Field(default=0, description="Number of attempts performed")
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Execution metadata")
+
+
 class ToolResult(BaseModel):
     """
     Outcome of a tool invocation.
@@ -168,7 +221,7 @@ class ToolResult(BaseModel):
       that agents don't need but operators do.
     """
     
-    id: UUID = Field(default_factory=lambda: UUID(int=0), description="Unique result ID")
+    id: UUID = Field(default_factory=uuid4, description="Unique result ID")
     tool_call_id: UUID = Field(description="References the ToolCall that produced this")
     
     # Execution outcome
@@ -224,3 +277,21 @@ class ToolResult(BaseModel):
                 }
             ]
         }
+
+
+class ToolValidationIssue(BaseModel):
+    """Structured validation issue returned by the tool validator."""
+
+    field: str = Field(description="Field or path that failed validation")
+    issue: str = Field(description="Human-readable issue")
+    expected: Optional[str] = Field(default=None, description="Expected format or type")
+    actual: Optional[str] = Field(default=None, description="Actual value or type")
+
+
+class ToolValidationResult(BaseModel):
+    """Detailed output from validating a tool call."""
+
+    is_valid: bool = Field(description="Whether the call is valid")
+    issues: List[ToolValidationIssue] = Field(default_factory=list, description="Validation issues")
+    normalized_arguments: Dict[str, Any] = Field(default_factory=dict, description="Normalized arguments")
+    rejected_reason: Optional[str] = Field(default=None, description="Summary reason for rejection")
