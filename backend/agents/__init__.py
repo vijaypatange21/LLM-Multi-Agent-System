@@ -51,6 +51,7 @@ Extension points:
 from .decomposition_agent import DecompositionAgent
 from .critique_agent import CritiqueAgent
 from .retrieval_reasoning_agent import RetrievalReasoningAgent
+from .synthesis_agent import SynthesisAgent
 from .schemas import (
     AmbiguityIndicator,
     AmbiguityType,
@@ -60,6 +61,11 @@ from .schemas import (
    CritiqueResult,
    CritiqueSpan,
    CritiqueTargetType,
+      SynthesisProvenanceEdge,
+      SynthesisProvenanceNode,
+      SynthesisResult,
+      SynthesisSentenceProvenance,
+      SynthesisSourceType,
     DecompositionResult,
     Task,
     TaskDependency,
@@ -73,6 +79,7 @@ __all__ = [
     "DecompositionAgent",
    "CritiqueAgent",
    "RetrievalReasoningAgent",
+   "SynthesisAgent",
     # Schemas - Task types and status
     "Task",
     "TaskType",
@@ -90,4 +97,9 @@ __all__ = [
    "ClaimConfidenceAssessment",
    "CritiqueFinding",
    "CritiqueResult",
+      "SynthesisSourceType",
+      "SynthesisProvenanceNode",
+      "SynthesisProvenanceEdge",
+      "SynthesisSentenceProvenance",
+      "SynthesisResult",
 ]

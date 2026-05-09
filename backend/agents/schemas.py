@@ -382,3 +382,64 @@ class CritiqueResult(BaseModel):
     rationale: str = Field(default="", description="Short structured rationale for the critique")
     provenance: Dict[str, Any] = Field(default_factory=dict)
 
+
+class SynthesisSourceType(str, Enum):
+    """Types of source evidence used during synthesis."""
+    AGENT_OUTPUT = "agent_output"
+    CLAIM = "claim"
+    CHUNK = "chunk"
+    CRITIQUE = "critique"
+    REASONING_STEP = "reasoning_step"
+
+
+class SynthesisProvenanceNode(BaseModel):
+    """Node in the synthesis provenance graph."""
+
+    node_id: str = Field(description="Stable node identifier")
+    node_type: SynthesisSourceType = Field(description="Type of provenance node")
+    source_agent_id: Optional[str] = Field(default=None, description="Agent that originated the node")
+    source_chunks: List[str] = Field(default_factory=list, description="Chunk IDs or handles that support this node")
+    critique_status: str = Field(default="unreviewed", description="critique status for this node")
+    confidence: float = Field(default=1.0, ge=0, le=1, description="Confidence assigned to this node")
+    text: Optional[str] = Field(default=None, description="Human-readable content for this node")
+
+
+class SynthesisProvenanceEdge(BaseModel):
+    """Edge in the synthesis provenance graph."""
+
+    edge_id: str = Field(description="Stable edge identifier")
+    from_node_id: str = Field(description="Upstream provenance node")
+    to_node_id: str = Field(description="Downstream provenance node")
+    relation: str = Field(description="Relation type, e.g. SUPPORTS, CONTRADICTS, REJECTS")
+    rationale: str = Field(description="Why this relation exists")
+
+
+class SynthesisSentenceProvenance(BaseModel):
+    """Sentence-level provenance record for the final response."""
+
+    sentence_id: str = Field(description="Stable sentence identifier")
+    sentence: str = Field(description="Sentence in the final response")
+    source_agent_ids: List[str] = Field(default_factory=list, description="Agents that contributed to this sentence")
+    source_chunks: List[str] = Field(default_factory=list, description="Chunks that support the sentence")
+    critique_status: str = Field(default="unreviewed", description="Aggregate critique status")
+    supporting_claim_ids: List[str] = Field(default_factory=list, description="Claims that support the sentence")
+    rejected_claim_ids: List[str] = Field(default_factory=list, description="Claims rejected to produce this sentence")
+    confidence: float = Field(default=1.0, ge=0, le=1, description="Sentence-level confidence")
+    explanation: str = Field(description="Why this sentence is safe and supported")
+
+
+class SynthesisResult(BaseModel):
+    """Structured final synthesis result."""
+
+    id: UUID = Field(default_factory=uuid4)
+    final_answer: str = Field(description="User-safe final answer")
+    sentence_provenance: List[SynthesisSentenceProvenance] = Field(default_factory=list)
+    provenance_nodes: List[SynthesisProvenanceNode] = Field(default_factory=list)
+    provenance_edges: List[SynthesisProvenanceEdge] = Field(default_factory=list)
+    conflict_resolution_log: List[str] = Field(default_factory=list)
+    rejected_claims: List[str] = Field(default_factory=list)
+    aggregated_confidence: float = Field(default=1.0, ge=0, le=1)
+    critique_feedback_used: List[str] = Field(default_factory=list)
+    safety_notes: List[str] = Field(default_factory=list)
+    provenance_map: Dict[str, Any] = Field(default_factory=dict)
+
