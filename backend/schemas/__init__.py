@@ -6,7 +6,7 @@ type safety and validation across the distributed architecture.
 """
 
 from .messages import AgentMessage, MessageRole
-from .context import SharedContext
+from .context import SharedContext, ContextMetadata
 from .tools import ToolCall, ToolResult, ToolDefinition
 from .execution import ExecutionTrace, ExecutionStep
 from .evaluation import EvalResult, EvalMetric
@@ -16,6 +16,7 @@ __all__ = [
     "AgentMessage",
     "MessageRole",
     "SharedContext",
+    "ContextMetadata",
     "ToolCall",
     "ToolResult",
     "ToolDefinition",

@@ -1,0 +1,9 @@
+# Core Dependencies
+pydantic>=2.0.0,<3.0.0  # Data validation and schema management
+
+# Development & Testing
+pytest>=7.0.0  # Testing framework
+pytest-asyncio>=0.21.0  # Async test support
+
+# Optional: Utilities (commonly useful)
+python-dotenv>=1.0.0  # Environment variable management
