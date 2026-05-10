@@ -45,14 +45,14 @@ class ExecutionStep(BaseModel):
     """
     
     id: UUID = Field(default_factory=lambda: UUID(int=0), description="Unique step ID")
-    execution_trace_id: UUID = Field(description="Parent execution trace")
+    execution_trace_id: UUID = Field(default_factory=lambda: UUID(int=0), description="Parent execution trace")
     
     # Step classification
     step_type: ExecutionStepType = Field(description="What type of action occurred")
-    step_number: int = Field(description="Order within the trace (1-indexed)")
+    step_number: int = Field(default=1, description="Order within the trace (1-indexed)")
     
     # What happened
-    description: str = Field(description="Human-readable summary of this step")
+    description: str = Field(default="", description="Human-readable summary of this step")
     input_data: Dict[str, Any] = Field(
         default_factory=dict,
         description="Input to this step (e.g., agent state, tool arguments)"
@@ -78,7 +78,7 @@ class ExecutionStep(BaseModel):
     # Timing
     started_at: datetime = Field(default_factory=datetime.utcnow)
     completed_at: datetime = Field(default_factory=datetime.utcnow)
-    duration_ms: float = Field(description="Execution time for this step")
+    duration_ms: float = Field(default=0.0, description="Execution time for this step")
     
     # Cost tracking
     cost_incurred: Optional[float] = Field(

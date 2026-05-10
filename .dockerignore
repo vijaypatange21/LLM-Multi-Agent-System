@@ -1,0 +1,13 @@
+__pycache__
+.pytest_cache
+.env
+*.pyc
+venv/
+env/
+node_modules/
+build/
+dist/
+*.sqlite3
+*.log
+Dockerfile*
+docker-compose.override.yml

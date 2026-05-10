@@ -1,0 +1,30 @@
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    postgresql-client \
+    netcat \
+    curl \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home appuser
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy application code
+COPY . /app
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
+COPY scripts/wait-and-run.sh /app/scripts/wait-and-run.sh
+RUN chmod +x /app/scripts/wait-and-run.sh
+
+ENTRYPOINT ["/bin/bash", "/app/scripts/wait-and-run.sh"]
+
