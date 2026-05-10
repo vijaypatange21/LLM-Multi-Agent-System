@@ -1,10 +1,18 @@
 # LLM Multi-Agent Orchestration System
 
-A production-grade, extensible architecture for multi-agent LLM systems with FastAPI, PostgreSQL, Redis, and comprehensive observability.
+A production-grade, distributed multi-agent orchestration system for coordinating specialized LLM agents, managing tool invocations, and measuring quality at scale.
 
-## ⚠️ Status: Architectural Design Phase
+**Status**: Architectural design + core abstractions complete. Ready for agent/tool implementations.
 
-This repository currently contains **architectural design only** - no implementation code yet.
+## Documentation
+
+- **[README_SENIOR.md](README_SENIOR.md)** ← Start here for comprehensive technical overview (20 min read)
+  - Architecture, components, orchestration flow
+  - Evaluation methodology, self-improving loop
+  - Adversarial robustness, known limitations
+  - Setup, API docs, development workflow
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** — Detailed component design
+- **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** — Trade-offs and rationale
 
 Focus is on:
 - ✅ System architecture and design patterns
@@ -99,21 +107,21 @@ message = AgentMessage(
 
 ### Key Modules
 
-| Module | Purpose | Status |
-|--------|---------|--------|
-| `backend/core/` | Base interfaces (Agent, Tool, Orchestrator) | ✅ Designed |
-| `backend/schemas/` | Pydantic data models | ✅ Designed |
-| `backend/agents/` | Agent implementations | ⏳ To implement |
-| `backend/tools/` | Tool implementations | ⏳ To implement |
-| `backend/orchestration/` | Orchestration strategies | ⏳ To implement |
-| `backend/database/` | ORM and data access | ⏳ To implement |
-| `backend/queue/` | Redis queue management | ⏳ To implement |
-| `backend/logging/` | Observability and tracing | ⏳ To implement |
-| `backend/streaming/` | SSE real-time updates | ⏳ To implement |
-| `backend/evaluation/` | Quality framework | ⏳ To implement |
-| `backend/prompts/` | Prompt versioning | ⏳ To implement |
-| `backend/api/` | FastAPI endpoints | ⏳ To implement |
-| `backend/workers/` | Background workers | ⏳ To implement |
+| Module | Purpose | 
+|--------|---------|
+| `backend/core/` | Base interfaces (Agent, Tool, Orchestrator) |
+| `backend/schemas/` | Pydantic data models |
+| `backend/agents/` | Agent implementations |
+| `backend/tools/` | Tool implementations |
+| `backend/orchestration/` | Orchestration strategies |
+| `backend/database/` | ORM and data access |
+| `backend/queue/` | Redis queue management |
+| `backend/logging/` | Observability and tracing |
+| `backend/streaming/` | SSE real-time updates |
+| `backend/evaluation/` | Quality framework |
+| `backend/prompts/` | Prompt versioning |
+| `backend/api/` | FastAPI endpoints |
+| `backend/workers/` | Background workers |
 
 ## Design Highlights
 
@@ -205,39 +213,151 @@ Immutable prompt snapshot.
 
 ```
 LLM-Multi-Agent-System/
-├── ARCHITECTURE.md              # Complete design document
-├── README.md                    # This file
-├── backend/
-│   ├── __init__.py
-│   ├── core/                    # ✅ Base interfaces
-│   │   ├── abstractions.py
-│   │   └── __init__.py
-│   ├── schemas/                 # ✅ Pydantic models
-│   │   ├── messages.py
-│   │   ├── context.py
-│   │   ├── tools.py
-│   │   ├── execution.py
-│   │   ├── evaluation.py
-│   │   ├── prompts.py
-│   │   └── __init__.py
-│   ├── agents/                  # ⏳ Agent implementations
-│   ├── tools/                   # ⏳ Tool implementations
-│   ├── orchestration/           # ⏳ Orchestration logic
-│   ├── database/                # ⏳ ORM models
-│   ├── queue/                   # ⏳ Queue management
-│   ├── logging/                 # ⏳ Observability
-│   ├── streaming/               # ⏳ SSE support
-│   ├── evaluation/              # ⏳ Quality framework
-│   ├── prompts/                 # ⏳ Prompt management
-│   ├── api/                     # ⏳ REST endpoints
-│   └── workers/                 # ⏳ Background workers
-├── docker/
-│   └── README.md                # Container architecture
-├── config/
-│   └── README.md                # Configuration management
-└── tests/                       # ⏳ Test suite
-
+├── Documentation
+│   ├── README.md                    # Main README (points to README_SENIOR.md)
+│   ├── README_SENIOR.md             # ← Comprehensive technical guide (start here)
+│   ├── ARCHITECTURE.md              # Detailed component design
+│   ├── DESIGN_DECISIONS.md          # Trade-offs and rationale
+│   ├── IMPLEMENTATION_GUIDE.md      # Implementation roadmap
+│   ├── API_IMPLEMENTATION_COMPLETE.md
+│   └── requirements.txt
+│
+├── Deployment & Configuration
+│   ├── docker-compose.yml           # Multi-service orchestration (API, worker, DB, Redis, Grafana, Loki)
+│   ├── Dockerfile.api               # Production API image
+│   ├── Dockerfile.worker            # Production worker image
+│   ├── .dockerignore                # Ignore patterns for Docker builds
+│   ├── .env.example                 # Environment variables template (NO hardcoded secrets)
+│   ├── config/
+│   │   └── README.md                # Configuration management guide
+│   └── docker/
+│       ├── README.md                # Container architecture guide
+│       └── loki-config.yaml         # Loki log aggregation config
+│
+├── Scripts
+│   └── scripts/
+│       ├── wait-for-it.sh           # Wait for TCP service availability
+│       └── wait-and-run.sh          # Wait for Postgres/Redis before starting worker
+│
+├── Source Code
+│   ├── backend/
+│   │   ├── __init__.py
+│   │   ├── app.py                   # ✅ FastAPI entry point (uvicorn target)
+│   │   │
+│   │   ├── core/                    # ✅ Base abstractions
+│   │   │   ├── __init__.py
+│   │   │   └── abstractions.py      # BaseAgent, BaseTool, Orchestrator, ContextManager
+│   │   │
+│   │   ├── schemas/                 # ✅ Pydantic data models
+│   │   │   ├── __init__.py
+│   │   │   ├── messages.py          # AgentMessage, MessageRole
+│   │   │   ├── context.py           # SharedContext
+│   │   │   ├── tools.py             # ToolCall, ToolResult, ToolDefinition
+│   │   │   ├── execution.py         # ExecutionTrace, ExecutionStep
+│   │   │   ├── evaluation.py        # EvalResult, EvalMetric
+│   │   │   └── prompts.py           # PromptVersion
+│   │   │
+│   │   ├── agents/                  # ✅ Agent implementations
+│   │   │   ├── __init__.py
+│   │   │   ├── abstractions.py      # BaseAgent interface
+│   │   │   ├── decomposition_agent.py
+│   │   │   ├── retrieval_reasoning_agent.py
+│   │   │   ├── synthesis_agent.py
+│   │   │   ├── critique_agent.py
+│   │   │   ├── schemas.py
+│   │   │   ├── decomposition_utils.py
+│   │   │   ├── examples.py
+│   │   │   ├── IMPLEMENTATION_COMPLETE.md
+│   │   │   └── DECOMPOSITION_GUIDE.md
+│   │   │
+│   │   ├── tools/                   # ✅ Tool implementations
+│   │   │   ├── __init__.py
+│   │   │   ├── standard_tools.py
+│   │   │   ├── runtime.py
+│   │   │   └── (custom tools go here)
+│   │   │
+│   │   ├── orchestration/           # ✅ Orchestration strategies
+│   │   │   ├── __init__.py
+│   │   │   ├── dynamic_orchestrator.py
+│   │   │   ├── context_window.py
+│   │   │   ├── routing.py
+│   │   │   ├── state_machine.py
+│   │   │   ├── schemas.py
+│   │   │   ├── examples.py
+│   │   │   ├── IMPLEMENTATION_COMPLETE.md
+│   │   │   └── ORCHESTRATOR_GUIDE.md
+│   │   │
+│   │   ├── evaluation/              # ✅ Quality evaluation framework
+│   │   │   ├── __init__.py
+│   │   │   ├── harness.py           # EvaluationHarness, test cases
+│   │   │   ├── test_cases.py        # Baseline, ambiguous, adversarial cases
+│   │   │   ├── runner.py            # EvaluationRunner (main entry point)
+│   │   │   ├── prompt_optimization.py  # MetaAgent, prompt diff generation
+│   │   │   └── examples.py
+│   │   │
+│   │   ├── api/                     # ✅ FastAPI REST endpoints
+│   │   │   ├── __init__.py
+│   │   │   ├── production_endpoints.py  # Query, traces, evaluations, approvals
+│   │   │   ├── observability_endpoints.py
+│   │   │   └── schemas.py           # Request/response models
+│   │   │
+│   │   ├── observability/           # ✅ Logging, tracing, metrics
+│   │   │   ├── __init__.py
+│   │   │   ├── logs.py
+│   │   │   ├── metrics.py
+│   │   │   ├── sse_events.py
+│   │   │   ├── trace_reconstruction.py
+│   │   │   ├── trace_replay.py
+│   │   │   └── orchestration_visibility.py
+│   │   │
+│   │   ├── database/                # ⏳ ORM models (to be implemented)
+│   │   │   └── __init__.py
+│   │   │
+│   │   ├── queue/                   # ⏳ Redis queue management
+│   │   │   └── __init__.py
+│   │   │
+│   │   ├── streaming/               # ⏳ SSE real-time updates
+│   │   │   └── __init__.py
+│   │   │
+│   │   ├── prompts/                 # ⏳ Prompt versioning system
+│   │   │   └── __init__.py
+│   │   │
+│   │   ├── optimization/            # ✅ Prompt optimization
+│   │   │   ├── __init__.py
+│   │   │   ├── orchestrator.py
+│   │   │   └── prompt_optimizer.py
+│   │   │
+│   │   ├── logging/                 # ⏳ Structured logging
+│   │   │   └── __init__.py
+│   │   │
+│   │   └── workers/                 # ⏳ Background job processors
+│   │       └── __init__.py
+│   │
+│   └── tests/                       # ✅ Comprehensive test suite
+│       ├── test_context_window.py
+│       ├── test_critique_agent.py
+│       ├── test_decomposition_agent.py
+│       ├── test_evaluation_harness.py
+│       ├── test_observability.py
+│       ├── test_production_api.py
+│       ├── test_prompt_optimization.py
+│       ├── test_retrieval_reasoning_agent.py
+│       ├── test_synthesis_agent.py
+│       └── test_tool_runtime.py
+│
+├── Data & Results
+│   └── evaluation_runs/
+│       └── results_*.json           # Evaluation results (JSON, versioned by UUID)
+│
+└── CI/CD & Environment
+    ├── .env                         # Local environment (git-ignored, create from .env.example)
+    └── .env/                        # Python virtual environment (git-ignored)
 ```
+
+**Legend**:
+- ✅ = Implemented and tested
+- ⏳ = Designed but not yet fully implemented
+- = Architectural design only
 
 ## Design Principles
 
