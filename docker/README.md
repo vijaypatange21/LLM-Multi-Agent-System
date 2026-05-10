@@ -2,8 +2,8 @@
 Docker and container orchestration module.
 
 Architecture Overview:
-This directory contains Dockerfiles and docker-compose configuration for
-containerizing the multi-agent system. Containerization enables:
+This directory contains the current Docker Compose stack and production Dockerfiles
+for containerizing the multi-agent system. Containerization enables:
 - Reproducible environments (same in dev, test, prod)
 - Isolation (services don't interfere)
 - Scalability (orchestrators like Kubernetes manage containers)
@@ -46,11 +46,13 @@ Services:
    - Pub/Sub
    - Volume mount for persistence
 
-7. Nginx (reverse proxy)
-   - Load balancing
-   - SSL/TLS termination
-   - Static file serving
-   - Rate limiting
+7. Grafana
+   - Log and metrics dashboard
+   - Connects to Loki for log exploration
+
+8. Loki
+   - Log aggregation backend
+   - Stores application and container logs
 
 Docker image structure:
 
@@ -86,10 +88,11 @@ Docker Compose (development):
 
 Services:
 - api: main application
+- worker: background worker runtime
 - postgres: database
 - redis: message queue
-- agent_worker: agent processing
-- tool_worker: tool execution
+- grafana: log viewer/dashboard
+- loki: log aggregation backend
 
 Networking:
 - All services on same network
@@ -102,9 +105,10 @@ Volumes:
 - Code volume for development (live reload)
 
 Environment:
-- DATABASE_URL: postgresql://postgres:password@postgres:5432/app
+- POSTGRES_USER / POSTGRES_PASSWORD / POSTGRES_DB: database credentials
 - REDIS_URL: redis://redis:6379/0
-- LOG_LEVEL: DEBUG (for development)
+- SECRET_KEY: application secret
+- GRAFANA_ADMIN_PASSWORD: Grafana admin password
 
 Health checks:
 - API: curl /health
@@ -143,5 +147,5 @@ Monitoring:
 - Health checks
 - Service mesh (Istio, Linkerd) for observability
 
-No implementations yet - only architecture and structure.
+This document now matches the repository's current Docker entrypoints and compose stack.
 """

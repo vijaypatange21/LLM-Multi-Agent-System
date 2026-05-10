@@ -2,6 +2,10 @@
 
 This document explains the "why" behind key architectural decisions and trade-offs made in the LLM Multi-Agent Orchestration System.
 
+Current repository state:
+- The decisions below are reflected in the implemented agents, orchestration logic, API entrypoint, evaluation harness, and Docker Compose stack.
+- Remaining work is mostly around durable persistence, worker hardening, and broader production controls.
+
 ## Decision 1: Message-Passing Over Direct Calls
 
 **Decision**: Components communicate via immutable `AgentMessage` objects rather than direct function calls.

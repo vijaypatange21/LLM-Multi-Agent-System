@@ -4,6 +4,10 @@
 
 All components of the dynamic orchestrator system are fully implemented and production-ready.
 
+Current repository note:
+- The orchestrator is wired into the current API entrypoint and evaluation flows.
+- Remaining work is focused on durable queues, persistence, and production scaling concerns.
+
 ## What Was Delivered
 
 ### Core Components (4 Modules)

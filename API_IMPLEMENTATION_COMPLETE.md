@@ -2,6 +2,10 @@
 
 **Status:** ✅ COMPLETE - All 5 production endpoints implemented and tested
 
+Current repository note:
+- These endpoints are mounted from `backend/app.py` in the current project layout.
+- The repository test suite validates the API schema and workflow behavior.
+
 ## Summary
 
 Implemented comprehensive production-ready REST API endpoints with OpenAPI documentation, Pydantic validation, and complete test coverage. The API provides programmatic access to:

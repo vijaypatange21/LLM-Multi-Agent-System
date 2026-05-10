@@ -1,6 +1,6 @@
 # LLM Multi-Agent Orchestration System
 
-**Status**: Architectural design implemented; concrete agents/tools/evaluators ready for extension.
+**Status**: Core agents, API entrypoint, evaluation harness, orchestration logic, and Docker Compose stack are implemented. Durable persistence and queue-backed worker hardening remain open.
 
 A production-grade, distributed multi-agent orchestration system for coordinating specialized LLM agents, managing tool invocations, and measuring quality at scale.
 
@@ -717,6 +717,7 @@ No hardcoded credentials. All secrets from `.env`.
 #### 3. Build and start
 
 ```bash
+cp .env.example .env
 docker-compose up --build
 ```
 
@@ -761,22 +762,17 @@ pip install -r requirements.txt
 #### 3. Set up database
 
 ```bash
-# Start PostgreSQL
-# Create database
+# Start PostgreSQL locally or via Docker Compose
 psql -U postgres -c "CREATE DATABASE llm_multi_agent_db;"
 
-# Run migrations (if present)
+# Run migrations when the migration layer is added
 python -m alembic upgrade head
 ```
 
 #### 4. Set up Redis
 
 ```bash
-# Start Redis (macOS with Homebrew)
 redis-server
-
-# Or use container
-docker run -d -p 6379:6379 redis:7-alpine
 ```
 
 #### 5. Configure environment
@@ -1024,8 +1020,8 @@ All errors return JSON:
 #### 1. Start services
 
 ```bash
-# Terminal 1: Docker containers (if using)
-docker-compose up
+# Terminal 1: Docker containers
+docker-compose up --build
 
 # OR Terminal 1: Redis + Postgres locally
 redis-server
@@ -1095,7 +1091,7 @@ curl -N http://localhost:8000/api/stream/{trace_id}
            # Append reasoning, tool calls, final output
            return trace
    ```
-3. Register in agent factory (to be implemented).
+3. Register in the agent factory or registry used by your application.
 4. Test: `pytest tests/test_my_agent.py -q`
 
 ### Adding a New Tool

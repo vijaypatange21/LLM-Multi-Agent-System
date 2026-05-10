@@ -2,7 +2,7 @@
 
 A production-grade, distributed multi-agent orchestration system for coordinating specialized LLM agents, managing tool invocations, and measuring quality at scale.
 
-**Status**: Architectural design + core abstractions complete. Ready for agent/tool implementations.
+**Status**: Core abstractions, API entrypoint, evaluation harness, orchestration logic, and Dockerized development stack are in place. Persistence and worker durability remain the main incomplete areas.
 
 ## Documentation
 
@@ -22,13 +22,16 @@ Focus is on:
 - ✅ Configuration and deployment patterns
 - ✅ Observability framework design
 
-Not yet implemented:
-- ❌ Concrete agent implementations
-- ❌ Concrete tool implementations
-- ❌ Database models and migrations
-- ❌ API endpoints
-- ❌ Worker processes
-- ❌ Tests
+Implemented or available now:
+- ✅ Concrete agent implementations for decomposition, retrieval/reasoning, synthesis, and critique
+- ✅ API endpoints for query submission, traces, evaluations, prompt approval, and health
+- ✅ Evaluation harness and prompt optimization workflow
+- ✅ Docker Compose stack for API, worker, PostgreSQL, Redis, Grafana, and Loki
+- ✅ Tests
+
+Still design-first or incomplete:
+- ⏳ Database models and migrations
+- ⏳ Durable queue-backed production worker runtime
 
 See [ARCHITECTURE.md](./ARCHITECTURE.md) for complete design.
 
@@ -310,7 +313,7 @@ LLM-Multi-Agent-System/
 │   │   │   ├── trace_replay.py
 │   │   │   └── orchestration_visibility.py
 │   │   │
-│   │   ├── database/                # ⏳ ORM models (to be implemented)
+│   │   ├── database/                # ⏳ ORM models (planned)
 │   │   │   └── __init__.py
 │   │   │
 │   │   ├── queue/                   # ⏳ Redis queue management
@@ -357,7 +360,7 @@ LLM-Multi-Agent-System/
 **Legend**:
 - ✅ = Implemented and tested
 - ⏳ = Designed but not yet fully implemented
-- = Architectural design only
+- = Architectural design only (kept for legacy sections in older docs)
 
 ## Design Principles
 
@@ -369,17 +372,6 @@ LLM-Multi-Agent-System/
 6. **Cost-consciousness**: Track and enforce budgets
 7. **Reproducibility**: Version everything, store execution traces
 
-## Next Steps (Implementation Roadmap)
-
-1. **Phase 1**: Database models and migrations
-2. **Phase 2**: Core agent and tool implementations
-3. **Phase 3**: Orchestration logic and message flow
-4. **Phase 4**: FastAPI endpoints and request handling
-5. **Phase 5**: Worker processes and queue management
-6. **Phase 6**: Logging and observability integration
-7. **Phase 7**: Streaming and real-time updates
-8. **Phase 8**: Evaluation framework
-9. **Phase 9**: Tests and CI/CD
 
 ## Configuration
 
@@ -398,19 +390,17 @@ Key configurations:
 
 ### Development
 ```bash
-docker-compose -f docker/docker-compose.yml up
+cp .env.example .env
+docker-compose up --build
 ```
 
 ### Production
 ```bash
-# Build image
-docker build -t agent-system:v1.0.0 .
-
-# Deploy with Kubernetes
-kubectl apply -f k8s/
+docker build -t agent-system:v1.0.0 -f Dockerfile.api .
+docker build -t agent-worker:v1.0.0 -f Dockerfile.worker .
 ```
 
-See [docker/README.md](./docker/README.md) for containerization details.
+See [docker/README.md](./docker/README.md) for containerization details and [README_SENIOR.md](README_SENIOR.md) for the current runtime workflow.
 
 ## Contributing
 

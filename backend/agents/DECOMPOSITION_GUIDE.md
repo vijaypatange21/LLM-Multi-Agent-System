@@ -1,5 +1,8 @@
 # Decomposition Agent Implementation Guide
 
+Current repository note:
+- The decomposition agent is implemented, tested, and integrated into the current orchestration flow.
+
 ## Overview
 
 The **DecompositionAgent** converts ambiguous natural language queries into structured, typed task graphs with explicit dependencies. It's the first stage of query processing before orchestration.

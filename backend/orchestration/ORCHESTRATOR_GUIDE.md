@@ -1,5 +1,8 @@
 # Dynamic Orchestrator Implementation Guide
 
+Current repository note:
+- This guide matches the orchestrator code present in the repository and the current Dockerized runtime entrypoint.
+
 ## Overview
 
 The **DynamicOrchestrator** is a production-grade multi-agent orchestration engine that:

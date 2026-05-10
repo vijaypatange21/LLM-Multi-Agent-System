@@ -2,8 +2,9 @@
 Configuration module.
 
 Architecture Overview:
-This directory contains configuration files for different environments
-(development, testing, production). Configuration is externalized to:
+This directory contains configuration guidance for the current Dockerized
+development workflow and future environment-specific configuration.
+Configuration is externalized to:
 - Keep secrets out of code
 - Enable different settings per environment
 - Make deployment easier
@@ -20,6 +21,7 @@ Configuration layers (precedence):
    - Overrides defaults
    - Not in git (secrets)
    - Per-developer or per-environment
+   - Generated from [.env.example](../.env.example)
 
 3. Environment variables
    - Highest precedence
@@ -158,5 +160,8 @@ Example configurations to create:
 - config/production.yaml: prod-specific
 - config/features.yaml: feature flags
 
-No implementations yet - only structure and guidelines.
+Current repository status:
+- `.env.example` is present and should be copied to `.env`
+- `docker-compose.yml` reads runtime values from environment variables
+- No hardcoded credentials should be committed
 """

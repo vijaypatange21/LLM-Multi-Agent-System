@@ -4,6 +4,10 @@
 
 All components of the decomposition agent system are fully implemented, tested, and documented.
 
+Current repository note:
+- The decomposition agent is part of the broader agent set that also includes retrieval/reasoning, synthesis, and critique agents.
+- It is exercised by the current orchestration flow and repository test suite.
+
 ## What Was Built
 
 ### 4 Core Modules

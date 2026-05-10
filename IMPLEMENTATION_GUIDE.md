@@ -1,6 +1,10 @@
 # Quick Start Guide for Implementation
 
-This guide helps developers implement the architectural design defined in this repository.
+This guide helps developers understand the remaining implementation work in the repository.
+
+Current repository state:
+- Core abstractions, several agents, orchestration logic, API endpoints, evaluation code, and Docker support are already implemented.
+- This guide focuses on the remaining persistence, worker, and production-hardening work.
 
 ## Getting Started
 
@@ -33,7 +37,7 @@ PromptVersion         # Versioned prompts
 
 ## Implementation Order (Recommended)
 
-### Phase 1: Foundation (Weeks 1-2)
+### Phase 1: Remaining Foundation Work (Weeks 1-2)
 1. **Database Models** (`backend/database/`)
    - Conversation ORM model
    - ExecutionTrace model
@@ -266,16 +270,8 @@ def downgrade():
 ### Setting Up the API
 
 ```python
-# backend/main.py
-from fastapi import FastAPI
-from backend.api import router
-
-app = FastAPI()
-app.include_router(router)
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# backend/app.py
+from backend.app import app
 ```
 
 ## Testing Pattern
@@ -399,4 +395,4 @@ async def test_agent_processes_message(agent, context):
 
 ---
 
-Good luck with implementation! Start with Phase 1, follow the order, and refer back to architecture docs as needed.
+Good luck with implementation! Start with the remaining foundation work, follow the order, and refer back to the architecture docs as needed.

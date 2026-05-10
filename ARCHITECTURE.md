@@ -494,8 +494,6 @@ Background job processors:
 - Structured logging and metrics
 - **Benefit**: Debugging, monitoring, compliance
 
-## Configuration
-
 Configuration layered by precedence:
 1. **Code defaults** (safest)
 2. **.env file** (per-developer)
@@ -543,23 +541,18 @@ Key configurations:
 
 ### Development
 ```
-docker-compose -f docker-compose.dev.yml up
+cp .env.example .env
+docker-compose up --build
 ```
-- Single container with all services
-- Hot reload enabled
-- Debug logging
-- Mock external APIs
+- Multi-container development stack
+- API, worker, PostgreSQL, Redis, Grafana, Loki
+- Health checks enabled
+- Log viewer available through Grafana
 
 ### Production
 ```
-# Build images
-docker build -t agent-api:v1.0.0 .
-
-# Push to registry
-docker push registry.company.com/agent-api:v1.0.0
-
-# Deploy via Kubernetes
-kubectl apply -f k8s/
+docker build -t agent-api:v1.0.0 -f Dockerfile.api .
+docker build -t agent-worker:v1.0.0 -f Dockerfile.worker .
 ```
 
 - Multi-container orchestration
