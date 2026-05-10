@@ -1,0 +1,1292 @@
+{
+  "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+  "timestamp": "2026-05-10T11:52:57.213377",
+  "results": [
+    {
+      "id": "d7f671d1-2698-4b83-8d73-173d5c1ea77f",
+      "case_id": "baseline_001",
+      "case_category": "baseline",
+      "prompt": "What are the main components of a transformer model?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: What are the main components of a transformer mode",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.08823529411764705,
+          "justification": "Expected key terms: {'cross-attention,', 'transformer', 'positional', '2)', 'models', '1)', 'feed-forward', 'multi-head', '3)', 'with', 'decoder', 'self-attention,', 'encoder', 'layers', 'attention', 'have:', 'encoding'}. Found: {'transformer'}. Match rate: 0.09",
+          "evidence": {
+            "expected_terms": [
+              "cross-attention,",
+              "transformer",
+              "positional",
+              "2)",
+              "models",
+              "1)",
+              "feed-forward",
+              "multi-head",
+              "3)",
+              "with",
+              "decoder",
+              "self-attention,",
+              "encoder",
+              "layers",
+              "attention",
+              "have:",
+              "encoding"
+            ],
+            "matched_terms": [
+              "transformer"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 1.0,
+          "justification": "No contradictions expected.",
+          "evidence": {}
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.5980392156862745,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.213926",
+      "duration_ms": 0.0019073486328125
+    },
+    {
+      "id": "77f8b599-57de-42e7-a5fe-da1e99a972a3",
+      "case_id": "baseline_002",
+      "case_category": "baseline",
+      "prompt": "Summarize the key findings from the climate change report.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Summarize the key findings from the climate change",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.06521739130434782,
+          "justification": "Expected key terms: {'findings:', 'times,', 'rise', 'include', 'impacts', '1.2c', 'emissions,', 'rise,', 'key', 'disruption', 'temperature', 'major', 'cause', 'sea', 'ecosystem', 'gas', 'pre-industrial', 'weather,', 'greenhouse', 'level', 'primary', 'extreme', 'since'}. Found: {'key'}. Match rate: 0.07",
+          "evidence": {
+            "expected_terms": [
+              "findings:",
+              "times,",
+              "rise",
+              "include",
+              "impacts",
+              "1.2c",
+              "emissions,",
+              "rise,",
+              "key",
+              "disruption",
+              "temperature",
+              "major",
+              "cause",
+              "sea",
+              "ecosystem",
+              "gas",
+              "pre-industrial",
+              "weather,",
+              "greenhouse",
+              "level",
+              "primary",
+              "extreme",
+              "since"
+            ],
+            "matched_terms": [
+              "key"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 1.0,
+          "justification": "No contradictions expected.",
+          "evidence": {}
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.5942028985507246,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214049",
+      "duration_ms": 0.00286102294921875
+    },
+    {
+      "id": "43495e1d-ea89-4a3b-8c28-b08c77b3fcad",
+      "case_id": "baseline_003",
+      "case_category": "baseline",
+      "prompt": "How does photosynthesis work?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: How does photosynthesis work?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.07500000000000001,
+          "justification": "Expected key terms: {'two', 'from', '(in', 'photosynthesis', 'nadph', 'nadph)', 'reactions/calvin', 'thylakoids,', 'cycle', 'atp', 'light', 'stroma,', 'has', 'co2)', 'glucose', 'reactions', 'stages:', 'dark', 'produce', 'use'}. Found: {'photosynthesis'}. Match rate: 0.08",
+          "evidence": {
+            "expected_terms": [
+              "two",
+              "from",
+              "(in",
+              "photosynthesis",
+              "nadph",
+              "nadph)",
+              "reactions/calvin",
+              "thylakoids,",
+              "cycle",
+              "atp",
+              "light",
+              "stroma,",
+              "has",
+              "co2)",
+              "glucose",
+              "reactions",
+              "stages:",
+              "dark",
+              "produce",
+              "use"
+            ],
+            "matched_terms": [
+              "photosynthesis"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 1.0,
+          "justification": "Expected 1 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 1,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 1.0,
+          "justification": "No contradictions expected.",
+          "evidence": {}
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.6791666666666667,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214126",
+      "duration_ms": 0.0021457672119140625
+    },
+    {
+      "id": "322fcf6b-6cda-4e45-8c65-e4842cd8d60a",
+      "case_id": "baseline_004",
+      "case_category": "baseline",
+      "prompt": "What is the capital of France?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: What is the capital of France?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.5,
+          "justification": "Expected key terms: {'paris', 'capital', 'france'}. Found: {'capital'}. Match rate: 0.50",
+          "evidence": {
+            "expected_terms": [
+              "paris",
+              "capital",
+              "france"
+            ],
+            "matched_terms": [
+              "capital"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 1.0,
+          "justification": "No citations expected or provided.",
+          "evidence": {
+            "output_citations": 0
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 1.0,
+          "justification": "No contradictions expected.",
+          "evidence": {}
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.75,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214185",
+      "duration_ms": 0.0016689300537109375
+    },
+    {
+      "id": "c8ad22bc-2614-4a72-a1ce-614bc9e7c43a",
+      "case_id": "baseline_005",
+      "case_category": "baseline",
+      "prompt": "Explain the water cycle.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Explain the water cycle.",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.09375,
+          "justification": "Expected key terms: {'(rain/snow),', '(forms', '(back', 'oceans)', 'from', 'evaporation', '(water', 'water', 'condensation', 'oceans/lakes', 'atmosphere),', 'precipitation', 'includes:', 'clouds),', 'cycle', 'runoff'}. Found: {'water'}. Match rate: 0.09",
+          "evidence": {
+            "expected_terms": [
+              "(rain/snow),",
+              "(forms",
+              "(back",
+              "oceans)",
+              "from",
+              "evaporation",
+              "(water",
+              "water",
+              "condensation",
+              "oceans/lakes",
+              "atmosphere),",
+              "precipitation",
+              "includes:",
+              "clouds),",
+              "cycle",
+              "runoff"
+            ],
+            "matched_terms": [
+              "water"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 1.0,
+          "justification": "Expected 1 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 1,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 1.0,
+          "justification": "No contradictions expected.",
+          "evidence": {}
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.6822916666666666,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214228",
+      "duration_ms": 0.0011920928955078125
+    },
+    {
+      "id": "8dda64f0-d821-4455-b606-7dd8cc35cf0a",
+      "case_id": "ambiguous_001",
+      "case_category": "ambiguous",
+      "prompt": "Summarize the impact of the policy and compare it with alternatives.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Summarize the impact of the policy and compare it ",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.0,
+          "justification": "Expected key terms: {'achieve', 'cap', '3-7%', 'carbon', '5%', 'mechanisms.', 'reduction.', 'tax', 'emission', 'trade', 'different', 'both', 'through', 'shows', 'goals'}. Found: set(). Match rate: 0.00",
+          "evidence": {
+            "expected_terms": [
+              "achieve",
+              "cap",
+              "3-7%",
+              "carbon",
+              "5%",
+              "mechanisms.",
+              "reduction.",
+              "tax",
+              "emission",
+              "trade",
+              "different",
+              "both",
+              "through",
+              "shows",
+              "goals"
+            ],
+            "matched_terms": []
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 0.0,
+          "justification": "Satisfied 0/1 constraints.",
+          "evidence": {
+            "satisfied": 0,
+            "total": 1
+          }
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.25,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214288",
+      "duration_ms": 0.0019073486328125
+    },
+    {
+      "id": "ed585e52-132a-46f0-b7aa-dbf391e30e7e",
+      "case_id": "ambiguous_002",
+      "case_category": "ambiguous",
+      "prompt": "Analyze the effectiveness of treatment X and consider side effects.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Analyze the effectiveness of treatment X and consi",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.25,
+          "justification": "Expected key terms: {'headaches.', 'fatigue', '80%', 'x', 'like', 'effective', 'side', 'with', 'resolving.', 'effects', 'most', 'long-term', 'treatment', 'effectiveness', 'shows', '78%', 'initially,', 'data'}. Found: {'treatment', 'effectiveness', 'x'}. Match rate: 0.25",
+          "evidence": {
+            "expected_terms": [
+              "headaches.",
+              "fatigue",
+              "80%",
+              "x",
+              "like",
+              "effective",
+              "side",
+              "with",
+              "resolving.",
+              "effects",
+              "most",
+              "long-term",
+              "treatment",
+              "effectiveness",
+              "shows",
+              "78%",
+              "initially,",
+              "data"
+            ],
+            "matched_terms": [
+              "treatment",
+              "effectiveness",
+              "x"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.4583333333333333,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214340",
+      "duration_ms": 0.00095367431640625
+    },
+    {
+      "id": "0d8374a4-f1d9-43bf-a67e-7a9db3717be2",
+      "case_id": "ambiguous_003",
+      "case_category": "ambiguous",
+      "prompt": "What is the best approach to X? Consider different perspectives.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: What is the best approach to X? Consider different",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.16666666666666666,
+          "justification": "Expected key terms: {'but', '(6', 'months).', 'quality', 'best', 'speed', 'prioritizes', 'months,', 'b', 'on', 'faster', '$10m),', 'depends', 'approach', '(12', 'over', 'priorities.', 'cheaper'}. Found: {'best', 'approach'}. Match rate: 0.17",
+          "evidence": {
+            "expected_terms": [
+              "but",
+              "(6",
+              "months).",
+              "quality",
+              "best",
+              "speed",
+              "prioritizes",
+              "months,",
+              "b",
+              "on",
+              "faster",
+              "$10m),",
+              "depends",
+              "approach",
+              "(12",
+              "over",
+              "priorities.",
+              "cheaper"
+            ],
+            "matched_terms": [
+              "best",
+              "approach"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.4444444444444444,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214396",
+      "duration_ms": 0.0016689300537109375
+    },
+    {
+      "id": "c7c0616f-e66f-4f98-9e24-f1e7248fb251",
+      "case_id": "ambiguous_004",
+      "case_category": "ambiguous",
+      "prompt": "What can we infer from the data?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: What can we infer from the data?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.0,
+          "justification": "Expected key terms: {'engagement', 'some', 'up', 'existing', 'while', 'suggests', 'but', 'new', 'cohorts:', 'user', 'users', 'churn', 'joining', 'leaving', 'engaged', 'also', 'different', '8%', '15%'}. Found: set(). Match rate: 0.00",
+          "evidence": {
+            "expected_terms": [
+              "engagement",
+              "some",
+              "up",
+              "existing",
+              "while",
+              "suggests",
+              "but",
+              "new",
+              "cohorts:",
+              "user",
+              "users",
+              "churn",
+              "joining",
+              "leaving",
+              "engaged",
+              "also",
+              "different",
+              "8%",
+              "15%"
+            ],
+            "matched_terms": []
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 1.0,
+          "justification": "No citations expected or provided.",
+          "evidence": {
+            "output_citations": 0
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.5,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214454",
+      "duration_ms": 0.0016689300537109375
+    },
+    {
+      "id": "f2ffa8d3-b7c7-46b1-b4f1-252a5b65698e",
+      "case_id": "ambiguous_005",
+      "case_category": "ambiguous",
+      "prompt": "Summarize the document and identify key recommendations.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Summarize the document and identify key recommenda",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.0,
+          "justification": "Expected key terms: {'query', '30%', 'optimization,', 'infrastructure', 'problem:', 'database', 'scaling,', 'different', 'increase.', 'root', 'causes.', 'upgrade.', 'latency', 'addresses', 'each', 'recommendations:'}. Found: set(). Match rate: 0.00",
+          "evidence": {
+            "expected_terms": [
+              "query",
+              "30%",
+              "optimization,",
+              "infrastructure",
+              "problem:",
+              "database",
+              "scaling,",
+              "different",
+              "increase.",
+              "root",
+              "causes.",
+              "upgrade.",
+              "latency",
+              "addresses",
+              "each",
+              "recommendations:"
+            ],
+            "matched_terms": []
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 1.0,
+          "justification": "No contradictions expected.",
+          "evidence": {}
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.5833333333333334,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214496",
+      "duration_ms": 0.00095367431640625
+    },
+    {
+      "id": "7a45246a-a8bf-48ee-a95f-4993a9ea914d",
+      "case_id": "adversarial_001",
+      "case_category": "adversarial",
+      "prompt": "Is treatment Y effective?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Is treatment Y effective?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.16666666666666666,
+          "justification": "Expected key terms: {'but', 'one', 'experiences', 'by', 'individual', 'trial', 'factors.', 'varies', 'meta-analysis.', 'patient', 'y', 'effectiveness', '95%', 'only', 'treatment', 'shows', 'mixed.', '45%'}. Found: {'treatment', 'y'}. Match rate: 0.17",
+          "evidence": {
+            "expected_terms": [
+              "but",
+              "one",
+              "experiences",
+              "by",
+              "individual",
+              "trial",
+              "factors.",
+              "varies",
+              "meta-analysis.",
+              "patient",
+              "y",
+              "effectiveness",
+              "95%",
+              "only",
+              "treatment",
+              "shows",
+              "mixed.",
+              "45%"
+            ],
+            "matched_terms": [
+              "treatment",
+              "y"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 2 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.4444444444444444,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214528",
+      "duration_ms": 0.00095367431640625
+    },
+    {
+      "id": "c3b34c8c-acc5-4a74-bdd5-23e1a63af0c7",
+      "case_id": "adversarial_002",
+      "case_category": "adversarial",
+      "prompt": "Did the policy reduce costs?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Did the policy reduce costs?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.0,
+          "justification": "Expected key terms: {'increase', 'transition', 'costs.', '20%', 'critique', 'but', 'official', 'vary.', 'when', 'methods', 'analysis', 'including', 'externalities.', '5%', '10%', 'report', 'independent', 'claims', 'shows', 'accounting', 'reduction,'}. Found: set(). Match rate: 0.00",
+          "evidence": {
+            "expected_terms": [
+              "increase",
+              "transition",
+              "costs.",
+              "20%",
+              "critique",
+              "but",
+              "official",
+              "vary.",
+              "when",
+              "methods",
+              "analysis",
+              "including",
+              "externalities.",
+              "5%",
+              "10%",
+              "report",
+              "independent",
+              "claims",
+              "shows",
+              "accounting",
+              "reduction,"
+            ],
+            "matched_terms": []
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.3333333333333333,
+          "justification": "Expected 3 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 3,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.3888888888888889,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214568",
+      "duration_ms": 0.00095367431640625
+    },
+    {
+      "id": "c6bb6a56-ed9b-4614-8af9-cf6438e62fc7",
+      "case_id": "adversarial_003",
+      "case_category": "adversarial",
+      "prompt": "Summarize the research findings.",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Summarize the research findings.",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.0,
+          "justification": "Expected key terms: {'likely', 'size', 'no', 'sample', 'reliable', 'due', 'but', 'positive', 'failed', 'p-hacking.', 'study', 'false', 'correlation', 'found', 'evidence', 'replication.', 'x-y', 'relationship.', 'small'}. Found: set(). Match rate: 0.00",
+          "evidence": {
+            "expected_terms": [
+              "likely",
+              "size",
+              "no",
+              "sample",
+              "reliable",
+              "due",
+              "but",
+              "positive",
+              "failed",
+              "p-hacking.",
+              "study",
+              "false",
+              "correlation",
+              "found",
+              "evidence",
+              "replication.",
+              "x-y",
+              "relationship.",
+              "small"
+            ],
+            "matched_terms": []
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.5,
+          "justification": "Expected 2 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 2,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.4166666666666667,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214602",
+      "duration_ms": 0.0007152557373046875
+    },
+    {
+      "id": "cdaa48f4-9a55-4616-b979-3d904dc5cbea",
+      "case_id": "adversarial_004",
+      "case_category": "adversarial",
+      "prompt": "What is the cause of the problem?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: What is the cause of the problem?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.07142857142857142,
+          "justification": "Expected key terms: {'likely', 'factors.', 'multiple', 'competing', 'oversimplification', 'three', 'root', 'culture', 'theories:', 'resources,', 'poor', 'issues.', 'cause', 'be', 'single', 'design,', 'process', 'incorrect.', 'would', 'insufficient', 'organizational'}. Found: {'cause'}. Match rate: 0.07",
+          "evidence": {
+            "expected_terms": [
+              "likely",
+              "factors.",
+              "multiple",
+              "competing",
+              "oversimplification",
+              "three",
+              "root",
+              "culture",
+              "theories:",
+              "resources,",
+              "poor",
+              "issues.",
+              "cause",
+              "be",
+              "single",
+              "design,",
+              "process",
+              "incorrect.",
+              "would",
+              "insufficient",
+              "organizational"
+            ],
+            "matched_terms": [
+              "cause"
+            ]
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.3333333333333333,
+          "justification": "Expected 3 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 3,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.40079365079365076,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214633",
+      "duration_ms": 0.00095367431640625
+    },
+    {
+      "id": "d16d4696-82b0-4ff5-942f-71ea8a41d15f",
+      "case_id": "adversarial_005",
+      "case_category": "adversarial",
+      "prompt": "Should we adopt this recommendation?",
+      "execution_trace_id": null,
+      "agent_outputs": {
+        "final_answer": "Mock response to: Should we adopt this recommendation?",
+        "confidence": 0.7,
+        "claims": [
+          {
+            "text": "Claim 1",
+            "citations": [
+              "source1"
+            ]
+          }
+        ],
+        "rejected_claims": [],
+        "tool_calls": 2
+      },
+      "dimension_scores": {
+        "correctness": {
+          "numeric_score": 0.0,
+          "justification": "Expected key terms: {'suggest', 'costs.', '100%', 'but', 'improvement', 'study', 'additional', 'industry', '18%', '~1.2x', 'roi', '3x', 'stability', 'with', 'vendor', 'after', '15-25%', 'hidden', 'claims', 'case', 'shows', 'benchmarks', 'roi,'}. Found: set(). Match rate: 0.00",
+          "evidence": {
+            "expected_terms": [
+              "suggest",
+              "costs.",
+              "100%",
+              "but",
+              "improvement",
+              "study",
+              "additional",
+              "industry",
+              "18%",
+              "~1.2x",
+              "roi",
+              "3x",
+              "stability",
+              "with",
+              "vendor",
+              "after",
+              "15-25%",
+              "hidden",
+              "claims",
+              "case",
+              "shows",
+              "benchmarks",
+              "roi,"
+            ],
+            "matched_terms": []
+          }
+        },
+        "citation_accuracy": {
+          "numeric_score": 0.3333333333333333,
+          "justification": "Expected 3 citations. Found 1 claims with citations.",
+          "evidence": {
+            "expected": 3,
+            "matched": 1
+          }
+        },
+        "contradiction_resolution": {
+          "numeric_score": 0.0,
+          "justification": "Expected 1 contradictions. Resolved 0 explicitly.",
+          "evidence": {
+            "rejected": 0,
+            "conflicts_logged": 0
+          }
+        },
+        "tool_efficiency": {
+          "numeric_score": 0.5,
+          "justification": "No execution trace available.",
+          "evidence": {}
+        },
+        "context_compliance": {
+          "numeric_score": 1.0,
+          "justification": "No constraints to check.",
+          "evidence": {}
+        },
+        "critique_agreement": {
+          "numeric_score": 0.5,
+          "justification": "No critique feedback available for comparison.",
+          "evidence": {}
+        }
+      },
+      "overall_score": 0.3888888888888889,
+      "run_id": "05a4e1ca-e353-46cb-9807-f5032cb4a763",
+      "timestamp": "2026-05-10T11:52:57.214664",
+      "duration_ms": 0.00095367431640625
+    }
+  ],
+  "summary": {
+    "total_cases": 15,
+    "average_overall_score": 0.5052996065575989,
+    "by_category": {
+      "baseline": 0.6607400895140665,
+      "ambiguous": 0.44722222222222224,
+      "adversarial": 0.40793650793650793
+    }
+  }
+}

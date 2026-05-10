@@ -130,6 +130,37 @@ Integration points:
 - Monitoring: track eval metrics over time
 - Analytics: answer "which agents work best?"
 - Learning: use eval data to improve prompts/agents
-
-No implementations yet - only framework design.
 """
+
+# Evaluation harness
+from .harness import (
+    CaseCategory,
+    DimensionScorer,
+    DimensionScore,
+    EvaluationCase,
+    EvaluationHarness,
+    EvaluationResult,
+    ScoringDimension,
+)
+
+# Test cases
+from .test_cases import (
+    create_baseline_cases,
+    create_ambiguous_cases,
+    create_adversarial_cases,
+)
+
+__all__ = [
+    # Harness
+    "CaseCategory",
+    "ScoringDimension",
+    "DimensionScore",
+    "EvaluationCase",
+    "EvaluationResult",
+    "DimensionScorer",
+    "EvaluationHarness",
+    # Test cases
+    "create_baseline_cases",
+    "create_ambiguous_cases",
+    "create_adversarial_cases",
+]
