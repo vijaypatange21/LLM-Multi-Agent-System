@@ -93,6 +93,18 @@ Database-backed state:
 - Messages queued in Redis for reliability
 """
 
+from .context_window import (
+    BudgetCheckResult,
+    BudgetManager,
+    CompressionPipeline,
+    CompressionResult,
+    ContextWindowManager,
+    OverflowEnforcer,
+    PreparedAgentContext,
+    StructuredDataPreservingSummarizer,
+    TokenEstimate,
+    TokenEstimator,
+)
 from .dynamic_orchestrator import DynamicOrchestrator
 from .routing import RuleBasedRoutingPolicy, RoutingPolicy
 from .schemas import (
@@ -101,12 +113,24 @@ from .schemas import (
     OrchestrationEvent,
     OrchestrationEventType,
     OrchestrationTrace,
+    PolicyViolation,
+    PolicyViolationType,
     RoutingDecision,
     RoutingDecisionReason,
 )
 from .state_machine import StructuredOrchestrationLogger
 
 __all__ = [
+    "BudgetCheckResult",
+    "BudgetManager",
+    "CompressionPipeline",
+    "CompressionResult",
+    "ContextWindowManager",
+    "OverflowEnforcer",
+    "PreparedAgentContext",
+    "StructuredDataPreservingSummarizer",
+    "TokenEstimate",
+    "TokenEstimator",
     "DynamicOrchestrator",
     "RoutingPolicy",
     "RuleBasedRoutingPolicy",
@@ -116,6 +140,8 @@ __all__ = [
     "OrchestrationEventType",
     "ExecutionPlan",
     "ExecutionStep",
+    "PolicyViolation",
+    "PolicyViolationType",
     "RoutingDecision",
     "RoutingDecisionReason",
 ]

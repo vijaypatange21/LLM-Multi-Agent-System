@@ -125,6 +125,26 @@ class ExecutionPlan(BaseModel):
     estimated_total_time_ms: float = Field(description="Total estimated time")
 
 
+class PolicyViolationType(str, Enum):
+    """Types of policy violations tracked by orchestration."""
+
+    BUDGET_EXCEEDED = "budget_exceeded"
+    CONTEXT_OVERFLOW = "context_overflow"
+    STRUCTURED_DATA_RISK = "structured_data_risk"
+    TOKEN_LIMIT_EXCEEDED = "token_limit_exceeded"
+
+
+class PolicyViolation(BaseModel):
+    """Structured record of a policy violation."""
+
+    violation_type: PolicyViolationType = Field(description="Type of violation")
+    message: str = Field(description="Human-readable description")
+    agent_id: Optional[str] = Field(default=None, description="Agent associated with the violation")
+    details: Dict[str, Any] = Field(default_factory=dict, description="Violation details")
+    severity: float = Field(default=1.0, ge=0.0, le=1.0, description="Severity from 0 to 1")
+    detected_at: datetime = Field(default_factory=datetime.utcnow)
+
+
 class OrchestrationEventType(str, Enum):
     """Types of orchestration events for logging."""
     QUERY_RECEIVED = "query_received"
@@ -141,6 +161,7 @@ class OrchestrationEventType(str, Enum):
     ORCHESTRATION_COMPLETED = "orchestration_completed"
     ORCHESTRATION_FAILED = "orchestration_failed"
     CONTEXT_UPDATED = "context_updated"
+    POLICY_VIOLATION = "policy_violation"
 
 
 class OrchestrationEvent(BaseModel):
@@ -244,11 +265,19 @@ class OrchestrationTrace(BaseModel):
         default_factory=dict,
         description="Links to ExecutionTrace for each agent (agent_id -> trace_id)"
     )
+    agent_token_usage: Dict[str, Dict[str, int]] = Field(
+        default_factory=dict,
+        description="Token usage by agent (agent_id -> prompt/completion/total)"
+    )
     
     # Failure handling
     failed_attempts: List[Dict[str, Any]] = Field(
         default_factory=list,
         description="Record of failed agent attempts (for retry analysis)"
+    )
+    policy_violations: List[PolicyViolation] = Field(
+        default_factory=list,
+        description="Structured policy violations detected during orchestration"
     )
     
     # Final outcome

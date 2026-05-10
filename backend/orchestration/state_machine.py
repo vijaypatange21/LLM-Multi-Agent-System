@@ -18,6 +18,7 @@ from .schemas import (
     OrchestrationEvent,
     OrchestrationEventType,
     OrchestrationTrace,
+    PolicyViolation,
 )
 
 
@@ -292,7 +293,25 @@ class StructuredOrchestrationLogger:
             },
             decision_explanation=f"Rejected {agent_rejected} due to budget constraint",
         )
-    
+
+    def log_policy_violation(
+        self,
+        violation: PolicyViolation,
+    ) -> OrchestrationEvent:
+        """Log a structured policy violation."""
+        self.trace.policy_violations.append(violation)
+        return self.log_event(
+            OrchestrationEventType.POLICY_VIOLATION,
+            violation.message,
+            details={
+                "violation_type": violation.violation_type.value,
+                "agent_id": violation.agent_id,
+                "severity": violation.severity,
+                **violation.details,
+            },
+            decision_explanation=violation.message,
+        )
+
     def log_context_updated(self, updates: Dict[str, Any]) -> OrchestrationEvent:
         """Log that shared context was updated."""
         return self.log_event(

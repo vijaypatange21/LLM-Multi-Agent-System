@@ -26,6 +26,7 @@ from uuid import UUID, uuid4
 
 from ..core import BaseAgent, BaseTool, Orchestrator
 from ..schemas import AgentMessage, ExecutionTrace, MessageRole, SharedContext
+from .context_window import ContextWindowManager
 from .routing import RuleBasedRoutingPolicy, RoutingPolicy
 from .schemas import (
     ExecutionPlan,
@@ -63,6 +64,8 @@ class DynamicOrchestrator(Orchestrator):
         self,
         routing_policy: Optional[RoutingPolicy] = None,
         max_retries: int = 2,
+        default_token_budget: int = 8192,
+        default_agent_token_budget: int = 2048,
         logger: Optional[logging.Logger] = None,
     ):
         """
@@ -71,10 +74,14 @@ class DynamicOrchestrator(Orchestrator):
         Args:
             routing_policy: Policy for agent selection (defaults to RuleBasedRoutingPolicy)
             max_retries: Max retries per agent on failure
+            default_token_budget: Default total context window budget in tokens
+            default_agent_token_budget: Default per-agent budget in tokens
             logger: Python logger for structured logging
         """
         self.routing_policy = routing_policy or RuleBasedRoutingPolicy()
         self.max_retries = max_retries
+        self.default_token_budget = default_token_budget
+        self.default_agent_token_budget = default_agent_token_budget
         self.logger = logger or logging.getLogger(__name__)
     
     async def execute(
@@ -115,6 +122,13 @@ class DynamicOrchestrator(Orchestrator):
             context = SharedContext(
                 conversation_id=conversation_id,
                 user_intent=initial_message.content,
+            )
+            token_budget = int(context.user_preferences.get("token_budget", self.default_token_budget))
+            token_window = ContextWindowManager(
+                total_budget_tokens=token_budget,
+                default_agent_budget_tokens=int(
+                    context.user_preferences.get("agent_token_budget", self.default_agent_token_budget)
+                ),
             )
             
             # Transition to planning stage
@@ -184,7 +198,9 @@ class DynamicOrchestrator(Orchestrator):
                 planned_agents=[a.agent_id for a in selected_agents],
                 planned_order=list(range(len(selected_agents))),
                 total_budget=budget,
-                budget_allocated={a.agent_id: budget / len(selected_agents) for a in selected_agents},
+                budget_allocated={
+                    a.agent_id: float(token_budget / len(selected_agents)) for a in selected_agents
+                },
                 estimated_total_cost=sum(
                     decision.estimated_cost or 0.0
                     for decision in routing_decisions
@@ -210,34 +226,73 @@ class DynamicOrchestrator(Orchestrator):
                     # Log start
                     event_logger.log_agent_started(agent.agent_id)
                     execution_plan.execution_stage = ExecutionStep.EXECUTING
-                    
+
+                    prepared = token_window.prepare_agent_input(
+                        agent.agent_id,
+                        initial_message,
+                        context,
+                        token_budget=int(
+                            execution_plan.budget_allocated.get(
+                                agent.agent_id,
+                                token_window.budget_manager.default_agent_budget_tokens,
+                            )
+                        ),
+                    )
+
+                    if not prepared.budget_check.allowed:
+                        if prepared.budget_check.policy_violation is not None:
+                            event_logger.log_policy_violation(prepared.budget_check.policy_violation)
+                        execution_plan.failed_agents.append(agent.agent_id)
+                        event_logger.log_agent_failed(
+                            agent_id=agent.agent_id,
+                            error=prepared.budget_check.reason,
+                            retry_count=0,
+                        )
+                        break
+
                     # Execute agent with retries
                     agent_trace = await self._execute_agent_with_retries(
                         agent,
-                        initial_message,
-                        context,
+                        prepared.message,
+                        prepared.context,
                         event_logger,
                     )
-                    
+
                     # Record result
                     trace.agent_execution_order.append(agent.agent_id)
                     trace.agent_results[agent.agent_id] = {
                         "output": agent_trace.final_output,
                         "status": agent_trace.status,
+                        "tokens": agent_trace.tokens_used or {},
                     }
                     trace.agent_execution_traces[agent.agent_id] = agent_trace.id
-                    
+                    trace.agent_token_usage[agent.agent_id] = agent_trace.tokens_used or {}
+
                     # Update costs
                     trace.total_cost += agent_trace.total_cost
                     execution_plan.completed_agents.append(agent.agent_id)
-                    
+
+                    actual_tokens = agent_trace.tokens_used or {}
+                    prompt_tokens = int(actual_tokens.get("prompt", actual_tokens.get("prompt_tokens", 0)))
+                    completion_tokens = int(actual_tokens.get("completion", actual_tokens.get("completion_tokens", 0)))
+                    recorded_tokens = token_window.budget_manager.record_usage(
+                        agent.agent_id,
+                        prompt_tokens=prompt_tokens,
+                        completion_tokens=completion_tokens,
+                    )
+                    trace.total_tokens_used = {
+                        "prompt": trace.total_tokens_used.get("prompt", 0) + recorded_tokens["prompt"],
+                        "completion": trace.total_tokens_used.get("completion", 0) + recorded_tokens["completion"],
+                        "total": trace.total_tokens_used.get("total", 0) + recorded_tokens["total"],
+                    }
+
                     # Log completion
                     event_logger.log_agent_completed(
                         agent_id=agent.agent_id,
                         cost=agent_trace.total_cost,
-                        tokens_used=agent_trace.tokens_used.get("total", 0),
+                        tokens_used=recorded_tokens["total"],
                     )
-                    
+
                     # Check budget
                     if trace.total_cost > budget:
                         event_logger.log_budget_constraint(
@@ -246,7 +301,7 @@ class DynamicOrchestrator(Orchestrator):
                             agent_rejected=selected_agents[i + 1].agent_id if i + 1 < len(selected_agents) else "N/A",
                         )
                         break
-                    
+
                 except Exception as e:
                     # Log failure
                     execution_plan.failed_agents.append(agent.agent_id)
@@ -255,7 +310,7 @@ class DynamicOrchestrator(Orchestrator):
                         error=str(e),
                         retry_count=0,
                     )
-                    
+
                     self.logger.error(
                         f"Agent {agent.agent_id} failed: {str(e)}",
                         extra={"trace_id": str(conversation_id)},
@@ -281,10 +336,7 @@ class DynamicOrchestrator(Orchestrator):
             event_logger.log_orchestration_completed(
                 final_output=final_output,
                 total_cost=trace.total_cost,
-                total_tokens=sum(
-                    t.get("total", 0)
-                    for t in (trace.agent_results.get(aid, {}).get("tokens", {}) or {}).values()
-                ),
+                total_tokens=trace.total_tokens_used.get("total", 0),
             )
             
             trace.completed_at = datetime.utcnow()
