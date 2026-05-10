@@ -150,6 +150,18 @@ from .test_cases import (
     create_adversarial_cases,
 )
 
+# Prompt optimization
+from .prompt_optimization import (
+    ApprovalStatus,
+    PromptRole,
+    PromptVersion,
+    PromptDiff,
+    PromptDiffGenerator,
+    PromptAnalyzer,
+    MetaAgent,
+    PromptOptimizationOrchestrator,
+)
+
 __all__ = [
     # Harness
     "CaseCategory",
@@ -163,4 +175,13 @@ __all__ = [
     "create_baseline_cases",
     "create_ambiguous_cases",
     "create_adversarial_cases",
+    # Prompt optimization
+    "ApprovalStatus",
+    "PromptRole",
+    "PromptVersion",
+    "PromptDiff",
+    "PromptDiffGenerator",
+    "PromptAnalyzer",
+    "MetaAgent",
+    "PromptOptimizationOrchestrator",
 ]
